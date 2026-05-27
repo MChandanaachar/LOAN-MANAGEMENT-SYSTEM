@@ -1,4 +1,9 @@
 // =============================
+// CONFIG
+// =============================
+const BASE_URL = "https://loan-management-system-7f0b.onrender.com";
+
+// =============================
 // AUTH STATE
 // =============================
 let token = localStorage.getItem("token");
@@ -9,6 +14,9 @@ window.onload = function () {
     if (token) {
         document.getElementById("loginPage").classList.add("hidden");
         document.getElementById("app").classList.remove("hidden");
+
+        show("dashboard");
+        getLoans();
     }
 };
 
@@ -16,7 +24,8 @@ window.onload = function () {
 // LOGIN
 // =============================
 function login() {
-    fetch("http://127.0.0.1:5000/login", {
+
+    fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -30,7 +39,6 @@ function login() {
         if (data.token) {
 
             token = data.token;
-
             localStorage.setItem("token", token);
 
             document.getElementById("loginPage").classList.add("hidden");
@@ -38,7 +46,13 @@ function login() {
 
             show("dashboard");
             getLoans();
+        } else {
+            alert("Invalid login");
         }
+    })
+    .catch(err => {
+        console.log(err);
+        alert("Login failed");
     });
 }
 
@@ -64,7 +78,7 @@ function show(page) {
 // =============================
 function addLoan() {
 
-    fetch("http://127.0.0.1:5000/loans", {
+    fetch(`${BASE_URL}/loans`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -99,7 +113,12 @@ function addLoan() {
 // =============================
 function getLoans() {
 
-    fetch("http://127.0.0.1:5000/loans")
+    fetch(`${BASE_URL}/loans`, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
     .then(res => res.json())
     .then(data => {
 
@@ -122,6 +141,10 @@ function getLoans() {
         });
 
         document.getElementById("loanTable").innerHTML = table;
+    })
+    .catch(err => {
+        console.log(err);
+        alert("Failed to fetch loans");
     });
 }
 
@@ -130,7 +153,7 @@ function getLoans() {
 // =============================
 function deleteLoan(id) {
 
-    fetch(`http://127.0.0.1:5000/loans/${id}`, {
+    fetch(`${BASE_URL}/loans/${id}`, {
         method: "DELETE",
         headers: {
             "Authorization": "Bearer " + token
@@ -141,11 +164,14 @@ function deleteLoan(id) {
 
         alert(data.message);
         getLoans();
+    })
+    .catch(err => {
+        console.log(err);
     });
 }
 
 // =============================
-// EDIT / UPDATE LOAN
+// EDIT LOAN
 // =============================
 function editLoan(id) {
 
@@ -153,7 +179,7 @@ function editLoan(id) {
     let amount = prompt("Enter amount");
     let status = prompt("Enter status");
 
-    fetch(`http://127.0.0.1:5000/loans/${id}`, {
+    fetch(`${BASE_URL}/loans/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -170,5 +196,8 @@ function editLoan(id) {
 
         alert(data.message);
         getLoans();
+    })
+    .catch(err => {
+        console.log(err);
     });
 }

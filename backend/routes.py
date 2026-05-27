@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from models import db, Loan
+from backend.models import db, Loan
    
 from flask_jwt_extended import (
     create_access_token,
