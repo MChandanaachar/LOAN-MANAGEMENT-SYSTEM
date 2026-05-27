@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginPage" class="center">
+    <div class="login-card">
+        <h2>Loan System Login</h2>
+        <input id="username" placeholder="Username">
+        <input id="password" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app hidden">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>💰 LoanSys</h2>
+
+        <button onclick="show('dashboard')">Dashboard</button>
+        <button onclick="show('add')">Add Loan</button>
+        <button onclick="show('loans'); getLoans()">Loans</button>
+    </div>
+
+    <!-- MAIN AREA -->
+    <div class="main">
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="page">
+            <h2>Welcome 👋</h2>
+
+           <div class="hero">
+    <h3>Loan Management Dashboard</h3>
+    <p>Track, manage and approve loans efficiently</p>
+
+    <img src="assets/dashboard.jpg" class="hero-img">
+
+    <div class="info-box">
+        <p>
+            🚀 Manage your loans smartly with our system.<br>
+            🔒 Secure API-based authentication using JWT.<br>
+            📊 Real-time loan tracking and status updates.<br>
+            ⚡ Fast processing for approval and rejection workflows.
+        </p>
+
+        <p class="footer-text">
+            © 2026 Loan Management System | Built for learning & demonstration purposes
+        </p>
+    </div>
+</div>
+        </div>
+
+        <!-- ADD LOAN -->
+        <div id="add" class="page hidden">
+            <h2>Add Loan</h2>
+
+            <input id="customer" placeholder="Customer">
+            <input id="amount" placeholder="Amount">
+            <input id="status" placeholder="Status">
+
+            <button onclick="addLoan()">Submit Loan</button>
+        </div>
+
+        <!-- LOANS -->
+        <div id="loans" class="page hidden">
+            <h2>Loan Records</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="loanTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
